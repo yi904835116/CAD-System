@@ -1,13 +1,18 @@
 import {DrawableShape} from './shapes';
-import {Model} from './model';
+import {Model, Subject,Observer} from './model';
 
 /**
  * A class to represent the View. Contains control buttons and an HTML5 canvas.
  */
-export class View {
+export class View implements Observer{
   //constants for access
+
+  subject:Subject;
+
+
   readonly canvas = <HTMLCanvasElement>$('#graphics-view canvas')[0];
   readonly brush = this.canvas.getContext('2d'); //will be correctly typed!
+
 
   private selected:DrawableShape; //selected state is handled by View
   private action:string; //what action we are doing (handled by View)
@@ -15,6 +20,10 @@ export class View {
 
   constructor(private model:Model){
     //event listeners (DOM for readability/speed)
+    this.subject.registerObserver(this);
+
+
+
     this.canvas.addEventListener('mousedown', (e) => {this.handleMouseDown(e)});
     this.canvas.addEventListener('mouseup', (e) => {this.handleMouseUp(e)});
     this.canvas.addEventListener('mousemove', (e) => {this.handleMove(e)});
@@ -29,12 +38,17 @@ export class View {
 
   }
 
+  // ?????
+  update(){
+    //update the display
+    this.display();
+  }
 
   display() {
     //erase canvas
     this.brush.clearRect(0,0, this.canvas.width, this.canvas.height);
 
-    let shapes = <DrawableShape[]>this.model.getShapes(); //read from the model
+    let shapes = <DrawableShape[]>this.model.getShapes(); //read from the model   should change to controller
 
     //draw all the shapes!
     for(let shape of shapes){
@@ -47,7 +61,7 @@ export class View {
     let y = event.offsetY;
 
     if(this.action === 'move') { 
-      this.selected = <DrawableShape>this.model.getShapeAt(x,y);
+      this.selected = <DrawableShape>this.model.getShapeAt(x,y); // should change to controller
     }
     else if(this.action === 'delete') {
       //TODO: delete shape at x,y coordinates
