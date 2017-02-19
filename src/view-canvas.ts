@@ -12,7 +12,8 @@ export class View implements Observer{
 
   readonly canvas = <HTMLCanvasElement>$('#graphics-view canvas')[0];
   readonly brush = this.canvas.getContext('2d'); //will be correctly typed!
-
+  
+  readonly updateButton = $("update");
 
   private selected:DrawableShape; //selected state is handled by View
   private action:string; //what action we are doing (handled by View)
@@ -20,9 +21,10 @@ export class View implements Observer{
 
   constructor(private model:Model){
     //event listeners (DOM for readability/speed)
+
+    // connect with the model by following Observer
+    this.subject = model;
     this.subject.registerObserver(this);
-
-
 
     this.canvas.addEventListener('mousedown', (e) => {this.handleMouseDown(e)});
     this.canvas.addEventListener('mouseup', (e) => {this.handleMouseUp(e)});
@@ -65,9 +67,17 @@ export class View implements Observer{
     }
     else if(this.action === 'delete') {
       //TODO: delete shape at x,y coordinates
+
+
+      this.model.deleteShape(x,y);
+      this.display();
     }
     else { //a creation method
       //TODO: create shape (based on action) at x,y coordinates
+      console.log("The action is " + this.action);
+      
+      this.model.addShape(this.action, x,y);
+      this.display();
     }
   }  
 

@@ -9,7 +9,7 @@
     "build": "./node_modules/.bin/webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "YOUR NAME HERE",
+  "author": "Zhaoyang Yi",
   "license": "ISC",
   "devDependencies": {
     "@types/jquery": "^2.0.40",

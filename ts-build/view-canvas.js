@@ -4,11 +4,14 @@
  */
 var View = (function () {
     function View(model) {
+        //event listeners (DOM for readability/speed)
         var _this = this;
         this.model = model;
         this.canvas = $('#graphics-view canvas')[0];
         this.brush = this.canvas.getContext('2d'); //will be correctly typed!
-        //event listeners (DOM for readability/speed)
+        this.updateButton = $("update");
+        // connect with the model by following Observer
+        this.subject = model;
         this.subject.registerObserver(this);
         this.canvas.addEventListener('mousedown', function (e) { _this.handleMouseDown(e); });
         this.canvas.addEventListener('mouseup', function (e) { _this.handleMouseUp(e); });
@@ -42,8 +45,15 @@ var View = (function () {
             this.selected = this.model.getShapeAt(x, y); // should change to controller
         }
         else if (this.action === 'delete') {
+            //TODO: delete shape at x,y coordinates
+            this.model.deleteShape(x, y);
+            this.display();
         }
         else {
+            //TODO: create shape (based on action) at x,y coordinates
+            console.log("The action is " + this.action);
+            this.model.addShape(this.action, x, y);
+            this.display();
         }
     };
     View.prototype.handleMouseUp = function (event) {
