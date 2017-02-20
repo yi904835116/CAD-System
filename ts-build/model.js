@@ -21,9 +21,12 @@ var Model = (function () {
         //remove from array (e.g,. with lodash)
         this.observers = this.observers.filter(function (ele) { return ele != deleted; });
     };
+    // 
     Model.prototype.notifyAll = function () {
+        var _this = this;
         this.observers.forEach(function (observer) {
-            observer.update();
+            observer.update(_this.shapes);
+            // observer.update();
         });
     };
     Model.prototype.getShapes = function () {
@@ -57,6 +60,7 @@ var Model = (function () {
             }
             this.shapes.push(shape);
         }
+        this.notifyAll();
     };
     Model.prototype.deleteShape = function (x, y) {
         var _this = this;
@@ -81,7 +85,7 @@ var ShapeFactory = (function (_super) {
     // private TRIAN_EDGE = 40;
     function ShapeFactory() {
         var _this = _super.call(this) || this;
-        _this.DEFAULT_RADIUS = 60;
+        _this.DEFAULT_RADIUS = 40;
         _this.DEFAULT_WIDTH = 60;
         _this.DEFAULT_HEIGHT = 60;
         return _this;
@@ -93,7 +97,7 @@ var ShapeFactory = (function (_super) {
         return new shapes_1.Circle(cx, cy, this.DEFAULT_RADIUS);
     };
     ShapeFactory.prototype.createTriangle = function (cx, cy) {
-        return new shapes_1.Triangle(cy, cy + 0.5 * this.DEFAULT_HEIGHT, cx - 0.5 * this.DEFAULT_WIDTH, cy - this.DEFAULT_HEIGHT, cx + 0.5 * this.DEFAULT_WIDTH, cy - this.DEFAULT_HEIGHT);
+        return new shapes_1.Triangle(cx, cy, cx - 0.5 * this.DEFAULT_WIDTH, cy - this.DEFAULT_HEIGHT, cx + 0.5 * this.DEFAULT_WIDTH, cy - this.DEFAULT_HEIGHT);
     };
     return ShapeFactory;
 }(Factory));

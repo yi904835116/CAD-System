@@ -1,17 +1,57 @@
 "use strict";
-var CanvasView = (function () {
-    function CanvasView() {
+var CanvasController = (function () {
+    function CanvasController(model, CanvasView) {
+        this.model = model;
+        this.CanvasView = CanvasView;
     }
-    CanvasView.prototype.addShape = function () {
+    CanvasController.prototype.addShape = function () {
     };
-    CanvasView.prototype.deleteShape = function () {
+    CanvasController.prototype.deleteShape = function () {
     };
-    return CanvasView;
+    CanvasController.prototype.moveShape = function () {
+    };
+    return CanvasController;
 }());
-var TextView = (function () {
-    function TextView() {
+exports.CanvasController = CanvasController;
+var TextController = (function () {
+    function TextController(game, textView) {
+        this.game = game;
+        this.textView = textView;
     }
-    TextView.prototype.editShape = function () {
+    TextController.prototype.editShape = function (jsonObject) {
     };
-    return TextView;
+    return TextController;
 }());
+exports.TextController = TextController;
+// export class Controller {
+//     constructor(private game: Model, private CanvasView: View, ) { }
+//     //starts the game
+//     play() {
+//         this.view.printBoard();
+//         this.takeTurn();
+//     }
+//     takeTurn() {
+//         this.view.printPrompt();
+//         io.question('> ', (input) => {
+//             try {
+//                 let cell = input.split(',');
+//                 //make a move!
+//                 let result = this.game.makeMove(Number(cell[0]), Number(cell[1]));
+//                 if (result) { //legal move
+//                     this.view.printBoard();
+//                     if (this.game.getWinner() !== undefined) {
+//                         this.view.printWinner(this.game.getWinner());
+//                         io.close();
+//                         return; //end
+//                     }
+//                 }
+//             } catch (e) { } //for parsing errors
+//             this.takeTurn(); //recurse!
+//         })
+//     }
+//     addShape() {
+//     }
+//     deleteShape() {
+//     }
+//     editShape(){}
+// } 

@@ -19,10 +19,11 @@ export class Model implements Subject {
     this.observers = this.observers.filter(ele => ele != deleted);
   }
 
-
+  // 
   notifyAll(): void {
     this.observers.forEach((observer: Observer) => {
-      observer.update();
+      observer.update(this.shapes);
+      // observer.update();
     })
 
   }
@@ -59,6 +60,7 @@ export class Model implements Subject {
       }
       this.shapes.push(shape);
     }
+    this.notifyAll();
   }
 
   deleteShape(x: number, y: number) {
@@ -83,7 +85,8 @@ export interface Subject {
 
 //Behaviors for Observers (subscribers)
 export interface Observer {
-  update(): void;
+  update(shapes:Shape[]): void;
+  // update(): void;
 }
 
 
@@ -97,7 +100,7 @@ abstract class Factory {
 
 //a concrete class that implements the Factory
 class ShapeFactory extends Factory {
-  private DEFAULT_RADIUS = 60;
+  private DEFAULT_RADIUS = 40;
   private DEFAULT_WIDTH = 60;
   private DEFAULT_HEIGHT = 60;
   // private TRIAN_HEIGHT = 40;
@@ -114,7 +117,7 @@ class ShapeFactory extends Factory {
     return new Circle(cx, cy, this.DEFAULT_RADIUS);
   }
   createTriangle(cx: number, cy: number): Triangle {
-    return new Triangle(cy, cy + 0.5 * this.DEFAULT_HEIGHT,
+    return new Triangle(cx, cy ,
       cx - 0.5 * this.DEFAULT_WIDTH, cy - this.DEFAULT_HEIGHT,
       cx + 0.5 * this.DEFAULT_WIDTH, cy - this.DEFAULT_HEIGHT);
   }
