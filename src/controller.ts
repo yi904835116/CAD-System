@@ -12,7 +12,7 @@ export interface CanvasSetter {
 
 export interface TextSetter {
     editShape(jsonObject: JSON);
-    getShapes();
+    updateModification(changes:string[]);
 }
 
 export class CanvasController implements CanvasSetter {
@@ -44,8 +44,8 @@ export class TextController implements TextSetter {
 
     }
 
-    getShapes(){
-        return this.model.getShapes();
+    updateModification(changes:string[]){
+        this.model.editShapes(changes);
     }
 
 }

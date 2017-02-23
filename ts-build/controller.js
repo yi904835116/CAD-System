@@ -26,8 +26,8 @@ var TextController = (function () {
     }
     TextController.prototype.editShape = function (jsonObject) {
     };
-    TextController.prototype.getShapes = function () {
-        return this.model.getShapes();
+    TextController.prototype.updateModification = function (changes) {
+        this.model.editShapes(changes);
     };
     return TextController;
 }());

@@ -31,16 +31,7 @@ export class View implements Observer {
 
     handleEventUpdate(event: MouseEvent): void {
         let lines = $('#form-control').val().split('\n');
-        console.log(lines);
-        let shapes:Shape[] = this.ctrl.getShapes();
-        for (var i = 0; i < lines.length - 1; i++) {
-            //code here using lines[i] which will give you each line
-            let jsonObject: Shape = JSON.parse(lines[i]);
-            shapes[i].updateProperties(jsonObject);
-            // jsonObject.updateProperties(jsonObject);
-            console.log(jsonObject);
-            this.subject.notifyAll();
-        }
+        this.ctrl.updateModification(lines);
     }
 
     // update modification          

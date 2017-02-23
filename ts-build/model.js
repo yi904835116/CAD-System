@@ -67,8 +67,13 @@ var Model = (function () {
         this.shapes = this.shapes.filter(function (ele) { return ele != _this.getShapeAt(x, y); });
         this.notifyAll();
     };
-    Model.prototype.editShape = function (x, y, json) {
-        var edited = this.getShapeAt(x, y);
+    Model.prototype.editShapes = function (changes) {
+        for (var i = 0; i < changes.length - 1; i++) {
+            //code here using lines[i] which will give you each line
+            var jsonObject = JSON.parse(changes[i]);
+            this.shapes[i].updateProperties(jsonObject);
+            console.log(jsonObject);
+        }
         this.notifyAll();
     };
     Model.prototype.moveShape = function (shape, x, y) {

@@ -20,16 +20,7 @@ var View = (function () {
     };
     View.prototype.handleEventUpdate = function (event) {
         var lines = $('#form-control').val().split('\n');
-        console.log(lines);
-        var shapes = this.ctrl.getShapes();
-        for (var i = 0; i < lines.length - 1; i++) {
-            //code here using lines[i] which will give you each line
-            var jsonObject = JSON.parse(lines[i]);
-            shapes[i].updateProperties(jsonObject);
-            // jsonObject.updateProperties(jsonObject);
-            console.log(jsonObject);
-            this.subject.notifyAll();
-        }
+        this.ctrl.updateModification(lines);
     };
     // update modification          
     View.prototype.update = function (shapes) {

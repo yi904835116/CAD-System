@@ -68,13 +68,18 @@ export class Model implements Subject {
     this.notifyAll();
   }
 
-  editShape(x: number, y: number, json: JSON) {
-    let edited = this.getShapeAt(x, y);
+  editShapes(changes: string[]) {
+    for (var i = 0; i < changes.length - 1; i++) {
+      //code here using lines[i] which will give you each line
+      let jsonObject: Shape = JSON.parse(changes[i]);
+      this.shapes[i].updateProperties(jsonObject);
+      console.log(jsonObject);
+    }
     this.notifyAll();
   }
 
-  moveShape(shape:Shape,x: number, y: number){
-    shape.setPosition(x,y);
+  moveShape(shape: Shape, x: number, y: number) {
+    shape.setPosition(x, y);
     this.notifyAll();
   }
 
@@ -89,7 +94,7 @@ export interface Subject {
 
 //Behaviors for Observers (subscribers)
 export interface Observer {
-  update(shapes:Shape[]): void;
+  update(shapes: Shape[]): void;
   // update(): void;
 }
 
@@ -121,7 +126,7 @@ class ShapeFactory extends Factory {
     return new Circle(cx, cy, this.DEFAULT_RADIUS);
   }
   createTriangle(cx: number, cy: number): Triangle {
-    return new Triangle(cx, cy ,
+    return new Triangle(cx, cy,
       cx - 0.5 * this.DEFAULT_WIDTH, cy - this.DEFAULT_HEIGHT,
       cx + 0.5 * this.DEFAULT_WIDTH, cy - this.DEFAULT_HEIGHT);
   }
