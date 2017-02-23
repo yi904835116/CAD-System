@@ -1,5 +1,6 @@
 "use strict";
 require("bootstrap"); //bootstrap.js for button toggling
+require("autosize");
 var model_1 = require("./model");
 var view_canvas_1 = require("./view-canvas");
 var view_textual_1 = require("./view-textual");

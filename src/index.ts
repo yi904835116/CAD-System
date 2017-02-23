@@ -1,5 +1,5 @@
 import 'bootstrap'; //bootstrap.js for button toggling
-
+import 'autosize';
 import {Model} from './model';
 import {View as CanvasView} from './view-canvas';
 import {View as TextView} from './view-textual';

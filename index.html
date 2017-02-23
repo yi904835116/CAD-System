@@ -1,14 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>My First CAD</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
   <style>
-    canvas { border: 1px solid lightgray; }
-    .btn-group, .btn-toolbar { margin-bottom: .5em; }
+    textarea {
+      /* box-sizing: padding-box; */
+      overflow: hidden;
+      /* demo only: */
+      width: 400px;
+      font-size: 14px;
+      display: block;
+    }
+    
+    canvas {
+      border: 1px solid lightgray;
+    }
+    
+    .btn-group,
+    .btn-toolbar {
+      margin-bottom: .5em;
+    }
   </style>
 </head>
+
 <body class="container">
   <h1>My First CAD System</h1>
 
@@ -36,20 +53,23 @@
 
       <!-- drawn display -->
       <canvas>
-        Sorry your browser doesn't support this application.
-        Try installing the latest version of <a href="https://www.google.com/chrome/">Google's Chrome browser</a>!		
+        Sorry your browser doesn't support this application. Try installing the latest version of <a href="https://www.google.com/chrome/">Google's Chrome browser</a>!
       </canvas>
     </div>
 
     <div id="text-view" class="col-xs-6">
       <div class="btn-toolbar">
         <div class="btn-group">
-          <button id = "update" class="btn btn-default">Update</button>
+          <button id="update" class="btn btn-default">Update</button>
         </div>
-      </div>      
+      </div>
       <textarea id="form-control"></textarea>
     </div>
   </div>
   <script src="dist/bundle.js"></script>
+
+
+  </css>
 </body>
+
 </html>

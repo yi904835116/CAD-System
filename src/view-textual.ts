@@ -1,29 +1,27 @@
 import { DrawableShape, Shape } from './shapes';
 import { Model, Subject, Observer, } from './model';
 import { TextController, TextSetter } from "./controller"
+import "autoresize-textarea";
 
 export class View implements Observer {
     subject: Subject;
     ctrl: TextSetter;
 
+    textarea = document.querySelector('textarea');
+
     // readonly textWindow = $("#form-control");
     readonly textWindow = document.getElementById("form-control");
     // readonly updateButton = $("#update");
     readonly updateButton = document.getElementById("update");
+    // autoResize(document.getElementById("form-control"));
+
 
     // constructor(private model: Model) {
     constructor(subject: Subject) {
         this.subject = subject;
         this.subject.registerObserver(this);
 
-        // this.updateButton.click(function () {
-            // this.updateModification();
-            // console.log("text is " + $("#form-control").val());
-            // let value: string = $("#form-control").val();
-            // let jsonObject: JSON = JSON.parse(value);
-
-            // console.log("JSON is" + jsonObject);
-        // });
+        $("#form-control")
         this.updateButton.addEventListener('click', (e) => { this.handleEventUpdate(e) });
     }
 
@@ -31,23 +29,31 @@ export class View implements Observer {
         this.ctrl = ctrl;
     }
 
-
     handleEventUpdate(event: MouseEvent): void {
-        console.log("text is " + $("#form-control").val());
-        let value: string = $("#form-control").val();
-        let jsonObject: JSON = JSON.parse(value);
-
-        console.log("JSON is" + jsonObject);
+        let lines = $('#form-control').val().split('\n');
+        console.log(lines);
+        let shapes:Shape[] = this.ctrl.getShapes();
+        for (var i = 0; i < lines.length - 1; i++) {
+            //code here using lines[i] which will give you each line
+            let jsonObject: Shape = JSON.parse(lines[i]);
+            shapes[i].updateProperties(jsonObject);
+            // jsonObject.updateProperties(jsonObject);
+            console.log(jsonObject);
+            this.subject.notifyAll();
+        }
     }
 
     // update modification          
     update(shapes: Shape[]) {
         let stringSum = "";
-        for(let i = 0; i < shapes.length; i++){
+        for (let i = 0; i < shapes.length; i++) {
             let shapeString = JSON.stringify(shapes[i]);
             stringSum += shapeString + "\n";
         }
         $("#form-control").val(stringSum);
+        if (shapes.length >= 2) {
+            $("#form-control").attr("rows", "" + shapes.length);
+        }
         console.log($("#form-control").val());
     }
 }
