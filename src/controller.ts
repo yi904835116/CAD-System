@@ -1,10 +1,13 @@
-import { View } from "./view-canvas";
+import { View as CanvasView} from "./view-canvas";
+import {    View as TextView} from './view-textual';
 import { Model, Subject, Observer } from './model';
+import { DrawableShape, Shape } from './shapes';
 
 export interface CanvasSetter {
-    addShape();
-    deleteShape();
-
+    addShape(action:string,x: number, y: number);
+    deleteShape(x: number, y: number);
+    moveShape(shape:Shape,x: number, y: number);
+    getShape(x: number, y: number):Shape;
 }
 
 export interface TextSetter {
@@ -13,24 +16,28 @@ export interface TextSetter {
 
 export class CanvasController implements CanvasSetter {
 
-    constructor(private model: Model, private CanvasView: View ) { }
+    constructor(private model: Model, private CanvasView: CanvasView) { }
 
-    addShape() {
-
+    addShape(action:string,x: number, y: number) {
+        this.model.addShape(action,x,y);
     }
 
-    deleteShape() {
-
+    moveShape(shape:Shape,x: number, y: number) {
+        this.model.moveShape(shape,x,y);
     }
 
-    moveShape(){
+    deleteShape(x: number, y: number){
+        this.model.deleteShape(x,y);
+    }
 
+    getShape(x: number, y: number):Shape{
+        return this.model.getShapeAt(x,y);
     }
 }
 
 export class TextController implements TextSetter {
 
-    constructor(private game: Model, private textView: View ) { }
+    constructor(private game: Model, private textView: TextView) { }
 
     editShape(jsonObject: JSON) {
 

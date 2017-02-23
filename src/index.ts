@@ -12,7 +12,7 @@ let textView = new TextView(model);
 let canvasController = new CanvasController(model,canvasView);
 let textController = new TextController(model,textView);
 
+canvasView.setController(canvasController);
+textView.setController(textController);
 
-
-//TODO: more views and controllers here...
 

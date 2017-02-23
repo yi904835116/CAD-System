@@ -65,9 +65,15 @@ var Model = (function () {
     Model.prototype.deleteShape = function (x, y) {
         var _this = this;
         this.shapes = this.shapes.filter(function (ele) { return ele != _this.getShapeAt(x, y); });
+        this.notifyAll();
     };
     Model.prototype.editShape = function (x, y, json) {
         var edited = this.getShapeAt(x, y);
+        this.notifyAll();
+    };
+    Model.prototype.moveShape = function (shape, x, y) {
+        shape.setPosition(x, y);
+        this.notifyAll();
     };
     return Model;
 }());

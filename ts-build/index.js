@@ -9,4 +9,5 @@ var canvasView = new view_canvas_1.View(model);
 var textView = new view_textual_1.View(model);
 var canvasController = new controller_1.CanvasController(model, canvasView);
 var textController = new controller_1.TextController(model, textView);
-//TODO: more views and controllers here...
+canvasView.setController(canvasController);
+textView.setController(textController);

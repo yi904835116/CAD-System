@@ -3,17 +3,15 @@
  * A class to represent the View. Contains control buttons and an HTML5 canvas.
  */
 var View = (function () {
-    function View(model, ctrl) {
+    //, private ctrl: CanvasController
+    // constructor(private model: Model) {
+    function View(subject) {
         //event listeners (DOM for readability/speed)
         var _this = this;
-        this.model = model;
-        this.ctrl = ctrl;
         this.canvas = $('#graphics-view canvas')[0];
         this.brush = this.canvas.getContext('2d'); //will be correctly typed!
-        this.textWindow = $("#form-control");
-        this.updateButton = $("#update");
         // connect with the model by following Observer
-        this.subject = model;
+        this.subject = subject;
         this.subject.registerObserver(this);
         this.canvas.addEventListener('mousedown', function (e) { _this.handleMouseDown(e); });
         this.canvas.addEventListener('mouseup', function (e) { _this.handleMouseUp(e); });
@@ -24,19 +22,11 @@ var View = (function () {
         //responsive canvas
         $(window).resize(function () { _this.resizeCanvas(); }); //call function on window resize
         this.resizeCanvas(); //initial sizing
-        this.updateButton.click(function () {
-            console.log("text is " + $("#form-control").val());
-            this.updateModification();
-        });
     }
-    View.prototype.updateModification = function () {
-        var value = $("#form-control").val();
-        var jsonObject = JSON.parse(value);
-        console.log(jsonObject);
+    View.prototype.setController = function (ctrl) {
+        this.ctrl = ctrl;
     };
     View.prototype.update = function (shapes) {
-        // update(){
-        //update the display
         this.display(shapes);
     };
     View.prototype.display = function (givenShapes) {
@@ -55,16 +45,20 @@ var View = (function () {
         var x = event.offsetX;
         var y = event.offsetY;
         if (this.action === 'move') {
-            this.selected = this.model.getShapeAt(x, y); // should change to controller
+            // this.selected = <DrawableShape>this.model.getShapeAt(x, y); // should change to controller should get a Shape object
+            this.selected = this.ctrl.getShape(x, y);
         }
         else if (this.action === 'delete') {
             //TODO: delete shape at x,y coordinates
-            this.model.deleteShape(x, y); // should change to controller
+            // this.model.deleteShape(x, y); // should change to controller
+            this.ctrl.deleteShape(x, y);
         }
         else {
             //TODO: create shape (based on action) at x,y coordinates
             console.log("The action is " + this.action);
-            this.model.addShape(this.action, x, y);
+            console.log("x is " + x + " y is " + y);
+            // this.model.addShape(this.action, x, y);
+            this.ctrl.addShape(this.action, x, y);
         }
         // this.display();
     };
@@ -75,6 +69,8 @@ var View = (function () {
         var x = event.offsetX;
         var y = event.offsetY;
         if (this.selected) {
+            //TODO: move the selected shape to x,y
+            this.ctrl.moveShape(this.selected, x, y);
         }
     };
     //make Canvas responsive (adapted from http://ameijer.nl/2011/08/resizable-html5-canvas/)
@@ -83,7 +79,7 @@ var View = (function () {
         var canvasElem = $(this.canvas);
         canvasElem.attr('width', canvasElem.parent().width());
         canvasElem.attr('height', ratio * canvasElem.width());
-        this.display();
+        // this.display();
     };
     return View;
 }());

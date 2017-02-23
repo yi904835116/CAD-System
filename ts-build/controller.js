@@ -4,11 +4,17 @@ var CanvasController = (function () {
         this.model = model;
         this.CanvasView = CanvasView;
     }
-    CanvasController.prototype.addShape = function () {
+    CanvasController.prototype.addShape = function (action, x, y) {
+        this.model.addShape(action, x, y);
     };
-    CanvasController.prototype.deleteShape = function () {
+    CanvasController.prototype.moveShape = function (shape, x, y) {
+        this.model.moveShape(shape, x, y);
     };
-    CanvasController.prototype.moveShape = function () {
+    CanvasController.prototype.deleteShape = function (x, y) {
+        this.model.deleteShape(x, y);
+    };
+    CanvasController.prototype.getShape = function (x, y) {
+        return this.model.getShapeAt(x, y);
     };
     return CanvasController;
 }());

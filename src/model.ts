@@ -65,14 +65,18 @@ export class Model implements Subject {
 
   deleteShape(x: number, y: number) {
     this.shapes = this.shapes.filter(ele => ele != this.getShapeAt(x, y));
+    this.notifyAll();
   }
 
   editShape(x: number, y: number, json: JSON) {
     let edited = this.getShapeAt(x, y);
-
+    this.notifyAll();
   }
 
-
+  moveShape(shape:Shape,x: number, y: number){
+    shape.setPosition(x,y);
+    this.notifyAll();
+  }
 
 }
 
