@@ -3,8 +3,6 @@
  * A class to represent the View. Contains control buttons and an HTML5 canvas.
  */
 var View = (function () {
-    //, private ctrl: CanvasController
-    // constructor(private model: Model) {
     function View(subject) {
         //event listeners (DOM for readability/speed)
         var _this = this;
@@ -79,6 +77,7 @@ var View = (function () {
         var canvasElem = $(this.canvas);
         canvasElem.attr('width', canvasElem.parent().width());
         canvasElem.attr('height', ratio * canvasElem.width());
+        this.subject.notifyAll();
         // this.display();
     };
     return View;

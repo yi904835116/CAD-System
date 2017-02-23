@@ -14,14 +14,9 @@ export class View implements Observer {
   readonly canvas = <HTMLCanvasElement>$('#graphics-view canvas')[0];
   readonly brush = this.canvas.getContext('2d'); //will be correctly typed!
 
-  // readonly textWindow = $("#form-control");
-  // readonly updateButton = $("#update");
-
   private selected: DrawableShape; //selected state is handled by View
   private action: string; //what action we are doing (handled by View)
 
-  //, private ctrl: CanvasController
-  // constructor(private model: Model) {
   constructor(subject: Subject) {
     //event listeners (DOM for readability/speed)
 
@@ -40,10 +35,6 @@ export class View implements Observer {
     //responsive canvas
     $(window).resize(() => { this.resizeCanvas() }); //call function on window resize
     this.resizeCanvas(); //initial sizing
-
-
-
-
   }
 
   setController(ctrl:CanvasController){
@@ -117,7 +108,7 @@ export class View implements Observer {
     let canvasElem = $(this.canvas);
     canvasElem.attr('width', canvasElem.parent().width());
     canvasElem.attr('height', ratio * canvasElem.width());
-    
+    this.subject.notifyAll();
     // this.display();
   }
 }
